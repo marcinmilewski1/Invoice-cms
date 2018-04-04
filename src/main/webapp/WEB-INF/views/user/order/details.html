@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Items</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="container">
+    <p>Zamowienie.</p>
+
+    <table class="table">
+        <tr>
+            <th><b>Id</b></th>
+            <th><b>Cena</b></th>
+            <th><b>Status</b></th>
+        </tr>
+        <tr>
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.price}"></td>
+            <td th:text="${order.state.orderStateType}"></td>
+            <table class="table">
+                <p>Szczegoly zamowienia.</p>
+                <tr>
+                    <th>Item name</th>
+                    <th>Amount</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+                <tr th:each="i : ${order.children}">
+                    <td th:text="${i.item.name}"></td>
+                    <td th:text="${i.amount}"></td>
+                    <td th:text="${i.price}"></td>
+                    <td th:text="${i.state.orderStateType}"></td>
+                </tr>
+            </table>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

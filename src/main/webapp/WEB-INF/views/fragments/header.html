@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Faktura</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="#" th:href="@{/}">Home</a>
+                </li>
+
+                <!--USER-->
+                    <li sec:authorize="hasRole('ROLE_USER')">
+                        <a href="/user/order" th:href="@{/user/order}">
+                            &nbsp;Zamowienia
+                        </a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_USER')">
+                        <a href="/user/items" th:href="@{/user/items}">
+                            &nbsp;Przedmioty
+                        </a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_USER')">
+                        <a href="/user/cart" th:href="@{/user/cart}">
+                            &nbsp;Koszyk
+                        </a>
+                    </li>
+                <!--ADMIN-->
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a href="/admin/items" th:href="@{/admin/items}">
+                            &nbsp;Przedmioty
+                        </a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a href="/admin/warehouse" th:href="@{/admin/warehouse}">
+                            &nbsp;Magazyn
+                        </a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a href="/admin/operative" th:href="@{/admin/operative}">
+                            &nbsp;Magazynierzy
+                        </a>
+                    </li>
+
+                <!--OPERATOR MAGAZYNU-->
+                    <li sec:authorize="hasRole('ROLE_OPERATIVE')">
+                        <a href="/operative/orders" th:href="@{/operative/orders}">
+                            &nbsp;Zamowienia
+                        </a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_OPERATIVE')">
+                        <a href="/operative/warehouse" th:href="@{/operative/warehouse}">
+                            &nbsp;Magazyn
+                        </a>
+                    </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a href="/admin/users" th:href="@{/admin/users}">
+                        &nbsp;Users
+                    </a>
+                </li>
+
+                <!--<li th:if="${#authorization.expression('isAuthenticated()')}">-->
+                    <!--<a href="/items" th:href="@{/items}">-->
+                        <!--&nbsp;Items-->
+                    <!--</a>-->
+                <!--</li>-->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li th:if="${#authorization.expression('!isAuthenticated()')}">
+                    <a href="/signin" th:href="@{/signin}">
+                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
+                    </a>
+                </li>
+                <li th:if="${#authorization.expression('isAuthenticated()')}">
+                    <a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
+                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
+                    </a>
+                    <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
+                </li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div>
+</body>
+</html>
